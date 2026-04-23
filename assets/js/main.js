@@ -52,13 +52,29 @@
   const nav = document.getElementById('nav');
   const navOverlay = document.getElementById('navOverlay');
 
+  function getScrollbarWidth() {
+    const outer = document.createElement('div');
+    outer.style.visibility = 'hidden';
+    outer.style.overflow = 'scroll';
+    document.body.appendChild(outer);
+    const inner = document.createElement('div');
+    outer.appendChild(inner);
+    const scrollbarWidth = outer.offsetWidth - inner.offsetWidth;
+    outer.parentNode.removeChild(outer);
+    return scrollbarWidth;
+  }
+
   function openMobileNav() {
     if (!nav || !menuToggle) return;
     nav.classList.add('open');
     menuToggle.classList.add('active');
     menuToggle.setAttribute('aria-expanded', 'true');
     if (navOverlay) navOverlay.classList.add('active');
+    const scrollbarWidth = getScrollbarWidth();
     document.body.style.overflow = 'hidden';
+    if (scrollbarWidth > 0) {
+      document.body.style.paddingRight = scrollbarWidth + 'px';
+    }
   }
 
   function closeMobileNav() {
@@ -68,6 +84,7 @@
     menuToggle.setAttribute('aria-expanded', 'false');
     if (navOverlay) navOverlay.classList.remove('active');
     document.body.style.overflow = '';
+    document.body.style.paddingRight = '';
   }
 
   if (menuToggle) {
@@ -431,7 +448,13 @@
       e.preventDefault();
       const input = this.querySelector('input');
       const button = this.querySelector('button');
-      if (input && input.value) {
+      const email = input.value.trim();
+      if (input && email) {
+        const storedEmails = JSON.parse(localStorage.getItem('newsletterEmails') || '[]');
+        if (!storedEmails.includes(email)) {
+          storedEmails.push(email);
+          localStorage.setItem('newsletterEmails', JSON.stringify(storedEmails));
+        }
         button.innerHTML = '<i class="fas fa-check"></i>';
         button.style.background = '#22c55e';
         input.value = '';
