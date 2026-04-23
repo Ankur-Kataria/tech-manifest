@@ -4,8 +4,13 @@
 
 /* ---------- Tablet (max-width: 1024px) ---------- */
 @media (max-width: 1024px) {
-  .grid-4 { grid-template-columns: repeat(2, 1fr); }
-  .grid-3 { grid-template-columns: repeat(2, 1fr); }
+  .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
 
   .about-grid,
   .why-grid,
@@ -60,7 +65,14 @@
 
 /* ---------- Mobile Large (max-width: 768px) ---------- */
 @media (max-width: 768px) {
+
   /* Mobile Navigation */
+  .header {
+    position: relative;
+    padding-right: 60px;
+    /* Space for menu-toggle */
+  }
+
   .nav {
     position: fixed;
     top: 0;
@@ -75,7 +87,7 @@
     padding: 40px;
     transition: right var(--transition-base);
     z-index: var(--z-overlay);
-    box-shadow: -10px 0 40px rgba(0,0,0,0.3);
+    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.3);
   }
 
   .nav.open {
@@ -94,7 +106,7 @@
     font-size: 1.1rem;
     padding: 12px 0;
     width: 100%;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   }
 
   .nav-link:hover,
@@ -117,6 +129,11 @@
 
   .menu-toggle {
     display: flex;
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    z-index: var(--z-fixed);
   }
 
   /* Mobile overlay */
@@ -124,7 +141,7 @@
     display: block;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0, 0, 0, 0.5);
     opacity: 0;
     visibility: hidden;
     transition: all var(--transition-base);
@@ -164,8 +181,13 @@
   }
 
   /* Sections */
-  .grid-2 { grid-template-columns: 1fr; }
-  .grid-3 { grid-template-columns: 1fr; }
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
 
   .section-header {
     margin-bottom: 40px;
@@ -359,6 +381,7 @@
 
 /* ---------- Reduced Motion ---------- */
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
@@ -383,6 +406,7 @@
 
 /* ---------- Print Styles ---------- */
 @media print {
+
   .header,
   .footer,
   .scroll-top,
