@@ -101,23 +101,7 @@
     navOverlay.addEventListener('click', closeMobileNav);
   }
 
-  // Close mobile nav on link click
-  document.querySelectorAll('.nav-link, .dropdown-link').forEach(link => {
-    link.addEventListener('click', () => {
-      if (window.innerWidth <= 768) {
-        closeMobileNav();
-      }
-    });
-  });
-
-  // Close mobile nav on Escape key
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && nav && nav.classList.contains('open')) {
-      closeMobileNav();
-    }
-  });
-
-  /* ---------- Mobile Dropdown Toggle ---------- */
+  // Mobile dropdown toggle for Services
   document.querySelectorAll('.nav-item').forEach(item => {
     const link = item.querySelector('.nav-link');
     const dropdown = item.querySelector('.dropdown');
@@ -126,9 +110,59 @@
       link.addEventListener('click', (e) => {
         if (window.innerWidth <= 768) {
           e.preventDefault();
+          e.stopPropagation();
+          
+          // Close other dropdowns
+          document.querySelectorAll('.nav-item.dropdown-open').forEach(otherItem => {
+            if (otherItem !== item) {
+              otherItem.classList.remove('dropdown-open');
+            }
+          });
+          
           item.classList.toggle('dropdown-open');
         }
       });
+    }
+  });
+
+  // Close mobile nav on dropdown-link click (actual navigation)
+  document.querySelectorAll('.dropdown-link').forEach(link => {
+    link.addEventListener('click', () => {
+      if (window.innerWidth <= 768) {
+        closeMobileNav();
+        // Remove all dropdown-open classes when navigating
+        document.querySelectorAll('.nav-item.dropdown-open').forEach(item => {
+          item.classList.remove('dropdown-open');
+        });
+      }
+    });
+  });
+
+  // Close mobile nav on main nav-link clicks (Home, About, Contact)
+  document.querySelectorAll('.nav-list > li > .nav-link').forEach(link => {
+    if (!link.parentElement.querySelector('.dropdown')) {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 768) {
+          closeMobileNav();
+        }
+      });
+    }
+  });
+
+  // Close mobile nav on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && nav && nav.classList.contains('open')) {
+      closeMobileNav();
+      document.querySelectorAll('.nav-item.dropdown-open').forEach(item => {
+        item.classList.remove('dropdown-open');
+      });
+    }
+  });
+
+  // Close mobile nav on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && nav && nav.classList.contains('open')) {
+      closeMobileNav();
     }
   });
 
