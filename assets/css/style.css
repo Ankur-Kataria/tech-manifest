@@ -110,6 +110,8 @@ body {
   color: var(--gray-700);
   background-color: var(--white);
   overflow-x: hidden;
+  min-width: 100%;
+  padding-inline-end: env(safe-area-inset-right, 0px);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -333,7 +335,9 @@ h6 {
   position: fixed;
   top: 0;
   left: 0;
+  right: 0;
   width: 100%;
+  min-width: 100%;
   z-index: var(--z-fixed);
   transition: all var(--transition-base);
   padding: 12px 0;
@@ -483,6 +487,8 @@ h6 {
   cursor: pointer;
   z-index: var(--z-fixed);
   padding: 4px 0;
+  position: relative;
+  right: 0;
 }
 
 .menu-toggle span {
@@ -2015,8 +2021,8 @@ h6 {
    ============================================ */
 .scroll-top {
   position: fixed;
-  bottom: 30px;
-  right: 30px;
+  bottom: calc(30px + env(safe-area-inset-bottom, 0px));
+  right: calc(30px + env(safe-area-inset-right, 0px));
   width: 50px;
   height: 50px;
   background: var(--gradient-primary);
