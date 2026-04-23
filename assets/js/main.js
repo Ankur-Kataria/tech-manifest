@@ -117,6 +117,21 @@
     }
   });
 
+  /* ---------- Mobile Dropdown Toggle ---------- */
+  document.querySelectorAll('.nav-item').forEach(item => {
+    const link = item.querySelector('.nav-link');
+    const dropdown = item.querySelector('.dropdown');
+
+    if (link && dropdown) {
+      link.addEventListener('click', (e) => {
+        if (window.innerWidth <= 768) {
+          e.preventDefault();
+          item.classList.toggle('dropdown-open');
+        }
+      });
+    }
+  });
+
   /* ---------- Scroll Reveal Animations ---------- */
   const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
 
