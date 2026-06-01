@@ -475,6 +475,39 @@
     sections.forEach(section => sectionObserver.observe(section));
   }
 
+  /* ---------- Customer Carousel ---------- */
+  const customerCarousels = document.querySelectorAll('.customer-carousel');
+
+  customerCarousels.forEach(carousel => {
+    const track = carousel.querySelector('.carousel-track');
+    const prevBtn = carousel.querySelector('.carousel-control.prev');
+    const nextBtn = carousel.querySelector('.carousel-control.next');
+
+    if (!track || !prevBtn || !nextBtn) return;
+
+    function updateCarouselControls() {
+      const maxScrollLeft = track.scrollWidth - track.clientWidth;
+      prevBtn.disabled = track.scrollLeft <= 0;
+      nextBtn.disabled = track.scrollLeft >= maxScrollLeft - 1;
+    }
+
+    function scrollBySlide(direction) {
+      const slide = track.querySelector('.carousel-slide');
+      if (!slide) return;
+      const slideWidth = slide.getBoundingClientRect().width + 20;
+      track.scrollBy({ left: direction * slideWidth, behavior: 'smooth' });
+    }
+
+    prevBtn.addEventListener('click', () => scrollBySlide(-1));
+    nextBtn.addEventListener('click', () => scrollBySlide(1));
+    track.addEventListener('scroll', () => {
+      window.requestAnimationFrame(updateCarouselControls);
+    });
+
+    window.addEventListener('resize', updateCarouselControls);
+    updateCarouselControls();
+  });
+
   /* ---------- CSS Animation KeyFrame for Portfolio Filter ---------- */
   const style = document.createElement('style');
   style.textContent = `
